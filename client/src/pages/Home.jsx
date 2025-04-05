@@ -6,6 +6,7 @@ import CategoryWiseProductDisplay from '../components/CategoryWiseProductDisplay
 import shuffleArray from '../utils/shuffleArray'
 import SpecialDeals from '../components/SpecialDeals'
 import Hero from '../components/Hero'
+import BasedOnHistory from '../components/BasedOnHistory'
 
 const Home = () => {
   const loadingCategory = useSelector(state => state.product.loadingCategory)
@@ -47,6 +48,8 @@ const Home = () => {
        <Hero />
 
        <SpecialDeals />
+       
+       <BasedOnHistory/>
       
       <div>
 

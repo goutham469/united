@@ -271,7 +271,7 @@ async function getCategoryName(catId)
         console.error('Failed to track history:', result.message);
       }
     } catch (error) {
-      console.error('Error tracking history:', error);
+      console.error('Error tracking history:', error );
     }
   };
 

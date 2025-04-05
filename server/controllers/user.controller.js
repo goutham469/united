@@ -7,6 +7,8 @@ import genertedRefreshToken from '../utils/generatedRefreshToken.js'
 import uploadImageClodinary from '../utils/uploadImageClodinary.js'
 import generatedOtp from '../utils/generatedOtp.js'
 import forgotPasswordTemplate from '../utils/forgotPasswordTemplate.js'
+import userHistoryModel from "../models/userHistory.model.js"
+import mongoose from 'mongoose'
 
 import jwt from 'jsonwebtoken'
 
@@ -547,6 +549,129 @@ export async function allUserDetails(request,response){
             error : true,
             success : false
         })
+    }
+}
+
+// Add this new controller
+export async function getUserRecommendations(request, response) {
+    try {
+        const userId = request.query.userId; 
+
+        const userHistory = await userHistoryModel.aggregate([
+            { 
+                $match: { 
+                    userId: new mongoose.Types.ObjectId(userId)
+                } 
+            },
+            {
+                $group: {
+                    _id: "$productId",
+                    viewCount: { $sum: 1 },
+                    lastViewed: { $max: "$viewedTime" }
+                }
+            },
+            {
+                $sort: {
+                    viewCount: -1,
+                    lastViewed: -1
+                }
+            },
+            { 
+                $limit: 5 
+            },
+            {
+                $lookup: {
+                    from: "products",
+                    localField: "_id",
+                    foreignField: "_id",
+                    as: "productDetails"
+                }
+            },
+            {
+                $unwind: "$productDetails"
+            },
+            {
+                $project: {
+                    _id: 1,
+                    viewCount: 1,
+                    lastViewed: 1,
+                    "productDetails._id": 1,
+                    "productDetails.name": 1,
+                    "productDetails.image": 1,
+                    "productDetails.price": 1,
+                    "productDetails.discount": 1,
+                    "productDetails.description": 1,
+                    "productDetails.category": 1,
+                    productId: "$_id"
+                }
+            }
+        ]);
+
+        if (userHistory.length === 0) {
+            const defaultRecommendations = await userHistoryModel.aggregate([
+                {
+                    $group: {
+                        _id: "$productId",
+                        totalViews: { $sum: 1 }
+                    }
+                },
+                {
+                    $sort: { totalViews: -1 }
+                },
+                {
+                    $limit: 5
+                },
+                {
+                    $lookup: {
+                        from: "products",
+                        localField: "_id",
+                        foreignField: "_id",
+                        as: "productDetails"
+                    }
+                },
+                {
+                    $unwind: "$productDetails"
+                },
+                {
+                    $project: {
+                        _id: 1,
+                        totalViews: 1,
+                        "productDetails._id": 1,
+                        "productDetails.name": 1,
+                        "productDetails.image": 1,
+                        "productDetails.price": 1,
+                        "productDetails.discount": 1,
+                        "productDetails.description": 1,
+                        "productDetails.category": 1,
+                        productId: "$_id"
+                    }
+                }
+            ]);
+
+            return response.json({
+                message: "Default recommendations retrieved successfully",
+                error: false,
+                success: true,
+                data: defaultRecommendations,
+                isDefaultRecommendation: true
+            });
+        }
+
+        return response.json({
+            message: "User recommendations retrieved successfully",
+            error: false,
+            success: true,
+            data: userHistory,
+            isDefaultRecommendation: false
+        });
+
+    } catch (error) {
+        console.error('Recommendation error:', error);
+        return response.status(500).json({
+            message: error.message || "Error getting recommendations",
+            error: true,
+            success: false
+        });
     }
 }
 
