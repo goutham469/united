@@ -26,7 +26,7 @@ function ValidatePayment() {
         }
     }
 
-    useEffect(()=>{
+    useEffect(()=>{ 
         verifyOrder()
     },[])
     

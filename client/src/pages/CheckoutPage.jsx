@@ -23,7 +23,7 @@ const CheckoutPage = () => {
 
   const handleCashOnDelivery = async() => {
       try {
-        console.log(cartItemsList)
+        console.log(cartItemsList)  
 
           const response = await Axios({
             ...SummaryApi.CashOnDeliveryOrder, 
