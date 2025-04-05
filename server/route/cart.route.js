@@ -18,7 +18,7 @@ cartRouter.put('/update-qty', auth, updateCartItemQtyController)
 cartRouter.delete('/delete-cart-item', auth, deleteCartItemQtyController)
 
 // Wishlist routes
-cartRouter.get("/get-wishlist", getWishListProducts)
+cartRouter.post("/get-wishlist", getWishListProducts)
 cartRouter.post("/add-to-wish-list", addToWishListProducts)
 
 export default cartRouter;

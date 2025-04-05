@@ -25,18 +25,22 @@ const CardProduct = ({ data }) => {
 
   const fetchWishlistStatus = async () => {
     try { 
+      let response = await fetch(`${baseURL}/api/cart/get-wishlist`, {
+        headers: {"Content-Type": "application/json"},
+        method: "POST",
+        body: JSON.stringify({ userId: user._id })
+      });
 
-      let response = await fetch(`${baseURL}/api/cart/get-wishlist`)
-
-      response = await response.json()
+      const result = await response.json();
       
-      const isProductInWishlist = response.data.data.some(
-        item => item.productId._id === data._id
+      // Check if the current product exists in the wishlist array
+      const isProductInWishlist = result.data.some(
+        wishlistItem => wishlistItem.productId._id === data._id
       );
+
       setIsInWishlist(isProductInWishlist);
     } catch (error) {
-      console.error('Error fetching wishlist status : ', error);
-
+      console.error('Error fetching wishlist status:', error);
     }
   };
 
@@ -52,22 +56,23 @@ const CardProduct = ({ data }) => {
     try {
       setLoading(true);
 
-      let response = await fetch(`${baseURL}/api/cart/add-to-wish-list`,{
-        headers:{"Content-Type":"application/json"},
-        method:"POST",
-        body:JSON.stringify({ userId:user._id , productId:data._id })
-      })
+      let response = await fetch(`${baseURL}/api/cart/add-to-wish-list`, {
+        headers: {"Content-Type": "application/json"},
+        method: "POST",
+        body: JSON.stringify({ userId: user._id, productId: data._id })
+      });
 
-      response = await response.json()
+      const result = await response.json();
 
-      if (response.data.success) {
-        setIsInWishlist(response.data.isAdded);
-        toast.success(response.data.message);
+      if (result.success) {
+        // Toggle the wishlist status
+        setIsInWishlist(!isInWishlist);
+        toast.success(result.message);
       }
 
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Error updating wishlist');
-      console.log(error)
+      toast.error('Error updating wishlist');
+      console.error('Wishlist error:', error);
     } finally {
       setLoading(false);
     }
@@ -110,7 +115,7 @@ const CardProduct = ({ data }) => {
           className="cursor-pointer" 
         />
         <FaHeart
-          color={isInWishlist ? '#ff4d4d' : '#1ba64f'}
+          color={isInWishlist ? '#1ba64f' : '#c8c8c8'}
           size={20}
           onClick={(e) => toggleWishlist(e)}
           className={`cursor-pointer transition-colors duration-300 ${

@@ -36,6 +36,7 @@ import Sales from "../components/Sales";
 import ValidatePayment from "../pages/ValidatePayment";
 import RecycleBinProduct from "../components/RecycleBinProduct";
 import Deals from "../components/Deals";
+import WishlistPage from "../pages/WishlistPage";
 
 const router = createBrowserRouter([
     {
@@ -149,6 +150,10 @@ const router = createBrowserRouter([
                     {
                         path:'sales',
                         element:<AdminPermision><Sales /></AdminPermision>
+                    },
+                    {
+                        path:'wishlist',
+                        element:<WishlistPage />
                     }
                 ]
             },

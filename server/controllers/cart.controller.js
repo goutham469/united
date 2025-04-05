@@ -149,18 +149,29 @@ export const deleteCartItemQtyController = async(request,response)=>{
 
 export const getWishListProducts = async (req, res) => {
     try {
-        const userId = req.userId;
-        const wishlistItems = await wishListModelSchema.find({ userId }).populate('productId');
+        const userId = req.body.userId;
+        
+        // Add proper population with specific fields
+        const wishlistItems = await wishListModelSchema.find({ userId })
+            .populate({
+                path: 'productId',
+                select: 'name image price discount description stock more_details', // Only select fields we need
+                match: { publish: true } // Only get published products
+            });
+
+        // Filter out any null productId items (in case product was deleted)
+        const validWishlistItems = wishlistItems.filter(item => item.productId);
 
         return res.json({
             message: "Wishlist items retrieved successfully",
             error: false,
             success: true,
-            data: wishlistItems
+            data: validWishlistItems
         });
     } catch (error) {
+        console.error('Wishlist fetch error:', error);
         return res.status(500).json({
-            message: error.message || error,
+            message: error.message || "Error fetching wishlist items",
             error: true,
             success: false
         });
@@ -168,11 +179,10 @@ export const getWishListProducts = async (req, res) => {
 }
 
 export const addToWishListProducts = async (req, res) => {
-    try {
-        const userId = req.userId;
-        const { productId } = req.body;
+    try { 
+        const { productId , userId } = req.body;
 
-        if (!productId) {
+        if (!productId) { 
             return res.status(400).json({
                 message: "Product ID is required",
                 error: true,

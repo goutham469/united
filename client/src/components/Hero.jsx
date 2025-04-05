@@ -13,12 +13,12 @@ function Hero()
   const images = {
     mobile: [
       { src: bannerMobile, url: 'https://editing-pack.vercel.app' },
-      { src: bannerMobile2 },
+      // { src: bannerMobile2 },
       { src: bannerMobile3 }
     ],
     desktop: [
       { src: banner, url: 'https://editing-pack.vercel.app' },
-      { src: banner2 }
+      // { src: banner2 }
     ]
   };
 

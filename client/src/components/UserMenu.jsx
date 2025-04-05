@@ -14,7 +14,7 @@ import { BiCategory, BiSolidCategory } from 'react-icons/bi'
 import { CgDanger, CgLogOut } from 'react-icons/cg'
 import { SiGoogleanalytics } from 'react-icons/si'
 import { FaBox, FaCloudUploadAlt, FaRupeeSign, FaShoppingCart, FaUsers } from 'react-icons/fa'
-import { FaIndianRupeeSign } from 'react-icons/fa6'
+import { FaIndianRupeeSign, FaHeart } from 'react-icons/fa6'
 import { GiCash } from 'react-icons/gi'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 
@@ -199,6 +199,13 @@ const UserMenu = ({close}) => {
                 </Link>
               )
             }
+
+            <Link onClick={handleClose} to={"/dashboard/wishlist"} className='px-2 hover:bg-orange-200 py-1'>
+              <div style={{display:"flex"}}>
+                <FaHeart size={20}/>
+                <label style={{margin:"3px"}}>My Wishlist</label>
+              </div>
+            </Link>
 
             <Link onClick={handleClose} to={"/dashboard/myorders"} className='px-2 hover:bg-orange-200 py-1'>
                 <div style={{display:"flex"}}>
