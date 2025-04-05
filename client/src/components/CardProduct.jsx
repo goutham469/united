@@ -26,11 +26,13 @@ const CardProduct = ({ data }) => {
   const fetchWishlistStatus = async () => {
     try { 
 
-      const response = await fetch(`${baseURL}/api/cart/get-wishlist`,{
+      let response = await fetch(`${baseURL}/api/cart/get-wishlist`,{
         headers:{"Content-Type":"application/json"},
         method:"POST",
         body:JSON.stringify({ userId:user._id , productId:data._id })
       })
+
+      response = await response.json()
       
       const isProductInWishlist = response.data.data.some(
         item => item.productId._id === data._id
@@ -38,7 +40,7 @@ const CardProduct = ({ data }) => {
       setIsInWishlist(isProductInWishlist);
     } catch (error) {
       console.error('Error fetching wishlist status : ', error);
-      
+
     }
   };
 
