@@ -66,6 +66,7 @@ const CardProduct = ({ data }) => {
 
     } catch (error) {
       toast.error(error.response?.data?.message || 'Error updating wishlist');
+      console.log(error)
     } finally {
       setLoading(false);
     }
