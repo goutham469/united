@@ -2,6 +2,7 @@ import { Router } from 'express'
 import auth from '../middleware/auth.js'
 import { addSurveyQuestion, getAllFormSurveys, getAllProductMetrics, getFormDetails, submitSurveyAnswer, surveyRouterEntry, updateProductViewMetric } from '../controllers/survey.controller.js'
 import { deleteTicket, getAllForms, submitForm } from '../controllers/contactus.controller.js'
+import { addUserHistory, getUserHistory } from '../controllers/userHistory.controller.js'
 
 
 const surveyRouter = Router()
@@ -21,5 +22,9 @@ surveyRouter.get('/getAllForms' , getAllForms)
 surveyRouter.post('/submitForm' , submitForm)
 surveyRouter.post('/deleteTicket' , deleteTicket)
 
+
+// user history tracking
+surveyRouter.post("/track-history", addUserHistory)
+surveyRouter.get("/get-history", getUserHistory)
 
 export default surveyRouter

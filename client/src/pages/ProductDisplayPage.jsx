@@ -247,7 +247,18 @@ async function getCategoryName(catId)
 
 
   // logic to fetch server and implement user browser history
+  // product_id : data._id , userId:
+  async function trackHistory() {
+    await fetch(`${baseURL}/api/survey/track-history`,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify( { productId:data._id, userId:user._id  } )
+    })
+  }
 
+  useEffect(()=>{
+    trackHistory();
+  },[])
 
   return (
     <div>

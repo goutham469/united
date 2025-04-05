@@ -9,6 +9,7 @@ import toast from 'react-hot-toast';
 import { FaHeart, FaShare } from 'react-icons/fa6';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import { baseURL } from '../common/SummaryApi';
 
 const CardProduct = ({ data }) => {
   const url = `/product/${valideURLConvert(data.name)}-${data._id}`;
@@ -23,19 +24,21 @@ const CardProduct = ({ data }) => {
   }, [user._id, data._id]);
 
   const fetchWishlistStatus = async () => {
-    try {
-      const response = await axios.get('/api/cart/get-wishlist', {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-      });
+    try { 
+
+      const response = await fetch(`${baseURL}/api/cart/get-wishlist`,{
+        headers:{"Content-Type":"application/json"},
+        method:"POST",
+        body:JSON.stringify({ userId:user._id , productId:data._id })
+      })
       
       const isProductInWishlist = response.data.data.some(
         item => item.productId._id === data._id
       );
       setIsInWishlist(isProductInWishlist);
     } catch (error) {
-      console.error('Error fetching wishlist status:', error);
+      console.error('Error fetching wishlist status : ', error);
+      
     }
   };
 
