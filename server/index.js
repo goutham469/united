@@ -109,7 +109,7 @@ connectDB().then(()=>{
         // console.log("1.metrics and form pop up added ")
         
 
-        console.log("ok")
+        console.log("ok ...")
 
         
     })
