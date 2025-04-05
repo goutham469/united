@@ -1,0 +1,19 @@
+org: goutham469
+app: my-express-app2
+service: e-commerce-sanjay
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: ap-south-1  # Mumbai region (ap-south-1)
+
+functions:
+  app:
+    handler: app.handler
+    memorySize: 256  # Memory size (128MB)
+    events:
+      - http: ANY /
+      - http: ANY /{proxy+}
+# plugins:
+#   - serverless-offline
+
