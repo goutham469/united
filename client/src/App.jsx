@@ -9,19 +9,18 @@ import { setUserDetails } from './store/userSlice';
 import { setAllCategory,setAllSubCategory,setLoadingCategory } from './store/productSlice';
 import { useDispatch } from 'react-redux';
 import Axios from './utils/Axios';
-import SummaryApi from './common/SummaryApi';
+import SummaryApi, { baseURL } from './common/SummaryApi';
 import { handleAddItemCart } from './store/cartProduct'
 import GlobalProvider from './provider/GlobalProvider';
 import { FaCartShopping } from "react-icons/fa6";
 import CartMobileLink from './components/CartMobile';
 
-export const baseURL = import.meta.env.VITE_SERVER_URL;
 
 function App() {
   const dispatch = useDispatch()
   const location = useLocation()
 
-  // console.log("server : ",baseURL)
+  console.log("server : ",baseURL)
 
 
   async function getServer() {
