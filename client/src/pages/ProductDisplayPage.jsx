@@ -246,6 +246,8 @@ async function getCategoryName(catId)
 }, [data._id, user._id]);
 
 
+  // logic to fetch server and implement user browser history
+
 
   return (
     <div>

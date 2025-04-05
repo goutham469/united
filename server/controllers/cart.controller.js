@@ -1,5 +1,6 @@
 import CartProductModel from "../models/cartproduct.model.js";
 import UserModel from "../models/user.model.js";
+import wishListModelSchema from "../models/wishList.model.js";
 
 export const addToCartItemController = async(request,response)=>{
     try {
@@ -140,5 +141,78 @@ export const deleteCartItemQtyController = async(request,response)=>{
             error : true,
             success : false
         })
+    }
+}
+
+
+// wishlist controllers
+
+export const getWishListProducts = async (req, res) => {
+    try {
+        const userId = req.userId;
+        const wishlistItems = await wishListModelSchema.find({ userId }).populate('productId');
+
+        return res.json({
+            message: "Wishlist items retrieved successfully",
+            error: false,
+            success: true,
+            data: wishlistItems
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: error.message || error,
+            error: true,
+            success: false
+        });
+    }
+}
+
+export const addToWishListProducts = async (req, res) => {
+    try {
+        const userId = req.userId;
+        const { productId } = req.body;
+
+        if (!productId) {
+            return res.status(400).json({
+                message: "Product ID is required",
+                error: true,
+                success: false
+            });
+        }
+
+        // Check if product already exists in wishlist
+        const existingItem = await wishListModelSchema.findOne({ userId, productId });
+        if (existingItem) {
+            // If item exists, remove it (toggle behavior)
+            await wishListModelSchema.deleteOne({ userId, productId });
+            return res.json({
+                message: "Product removed from wishlist",
+                error: false,
+                success: true,
+                isAdded: false
+            });
+        }
+
+        // If item doesn't exist, add it
+        const wishlistItem = new wishListModelSchema({
+            userId,
+            productId
+        });
+
+        const savedItem = await wishlistItem.save();
+
+        return res.json({
+            message: "Product added to wishlist successfully",
+            error: false,
+            success: true,
+            data: savedItem,
+            isAdded: true
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: error.message || error,
+            error: true,
+            success: false
+        });
     }
 }

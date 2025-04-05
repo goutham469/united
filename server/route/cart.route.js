@@ -1,12 +1,24 @@
 import { Router } from "express";
 import auth from "../middleware/auth.js";
-import { addToCartItemController, deleteCartItemQtyController, getCartItemController, updateCartItemQtyController } from "../controllers/cart.controller.js";
+import { 
+    addToCartItemController, 
+    deleteCartItemQtyController, 
+    getCartItemController, 
+    updateCartItemQtyController,
+    getWishListProducts,
+    addToWishListProducts
+} from "../controllers/cart.controller.js";
 
 const cartRouter = Router()
 
-cartRouter.post('/create',auth,addToCartItemController)
-cartRouter.get("/get",auth,getCartItemController)
-cartRouter.put('/update-qty',auth,updateCartItemQtyController)
-cartRouter.delete('/delete-cart-item',auth,deleteCartItemQtyController)
+// Cart routes
+cartRouter.post('/create', auth, addToCartItemController)
+cartRouter.get("/get", auth, getCartItemController)
+cartRouter.put('/update-qty', auth, updateCartItemQtyController)
+cartRouter.delete('/delete-cart-item', auth, deleteCartItemQtyController)
+
+// Wishlist routes
+cartRouter.get("/get-wishlist", auth, getWishListProducts)
+cartRouter.post("/add-to-wish-list", auth, addToWishListProducts)
 
 export default cartRouter
