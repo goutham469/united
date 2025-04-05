@@ -39,7 +39,9 @@ function CreateCashFreeOrder( { list_items, addressId, subTotalAmt, totalAmt,use
             if(data?.data?.success){
                 setOrderGenerated(data?.data?.data[0].orderId)
                 // alert("payment id generated !")
-                // console.log(data?.data?.data[0].orderId)
+                console.log(data?.data?.data)
+                console.log(data?.data?.data[0])
+                console.log(data?.data?.data[0].orderId)
                 console.log(data)
             }
             
