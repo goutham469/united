@@ -26,11 +26,7 @@ const CardProduct = ({ data }) => {
   const fetchWishlistStatus = async () => {
     try { 
 
-      let response = await fetch(`${baseURL}/api/cart/get-wishlist`,{
-        headers:{"Content-Type":"application/json"},
-        method:"POST",
-        body:JSON.stringify({ userId:user._id , productId:data._id })
-      })
+      let response = await fetch(`${baseURL}/api/cart/get-wishlist`)
 
       response = await response.json()
       
@@ -55,14 +51,14 @@ const CardProduct = ({ data }) => {
 
     try {
       setLoading(true);
-      
-      const response = await axios.post('/api/cart/add-to-wish-list', {
-        productId: data._id
-      }, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-      });
+
+      let response = await fetch(`${baseURL}/api/cart/add-to-wish-list`,{
+        headers:{"Content-Type":"application/json"},
+        method:"POST",
+        body:JSON.stringify({ userId:user._id , productId:data._id })
+      })
+
+      response = await response.json()
 
       if (response.data.success) {
         setIsInWishlist(response.data.isAdded);
@@ -89,7 +85,7 @@ const CardProduct = ({ data }) => {
     });
   };
 
-  console.log({ productId:data._id , userId:user._id  })
+  // console.log({ productId:data._id , userId:user._id  })
   // implement get route to get wishlist data
   // implement post route to update wishlist functions
   // if the product is in winshlist change the heart color to different

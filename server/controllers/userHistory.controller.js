@@ -12,6 +12,26 @@ export const addUserHistory = async (req,res)=>{
             });
         }
 
+        const existingEntry = await userHistoryModel.findOne({
+            userId,
+            productId,
+            viewedTime: {
+                $gte: new Date(Date.now() - 24 * 60 * 60 * 1000)
+            }
+        });
+
+        if (existingEntry) {
+            existingEntry.viewedTime = new Date();
+            await existingEntry.save();
+
+            return res.json({
+                message: "History updated successfully",
+                error: false,
+                success: true,
+                data: existingEntry
+            });
+        }
+
         const historyEntry = new userHistoryModel({
             userId,
             productId,
@@ -27,8 +47,9 @@ export const addUserHistory = async (req,res)=>{
             data: savedEntry
         });
     }catch(error){
+        console.error('History tracking error:', error);
         return res.status(500).json({
-            message: error.message || error,
+            message: error.message || "Error tracking history",
             error: true,
             success: false
         });
@@ -47,18 +68,36 @@ export const getUserHistory = async (req,res)=>{
             });
         }
 
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const skip = (page - 1) * limit;
+
         const results = await userHistoryModel.find({ userId })
-            .sort({ viewedTime: -1 }); // Sort by newest first
+            .sort({ viewedTime: -1 })
+            .skip(skip)
+            .limit(limit)
+            .populate('productId', 'name image price');
+
+        const total = await userHistoryModel.countDocuments({ userId });
 
         return res.json({
             message: "User history retrieved successfully",
             error: false,
             success: true,
-            data: results
+            data: {
+                history: results,
+                pagination: {
+                    currentPage: page,
+                    totalPages: Math.ceil(total / limit),
+                    totalItems: total,
+                    itemsPerPage: limit
+                }
+            }
         });
     }catch(error){
+        console.error('Get history error:', error);
         return res.status(500).json({
-            message: error.message || error,
+            message: error.message || "Error retrieving history",
             error: true,
             success: false
         });

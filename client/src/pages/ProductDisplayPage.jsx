@@ -71,17 +71,17 @@ const ProductDisplayPage = () => {
 
 async function getCategoryName(catId) 
 {
-  console.log(catId);
+  // console.log(catId);
 
   try 
   {
     let response = await fetch(`${baseURL}/api/category/get`);
     let categories = await response.json();
     categories = categories.data;
-    console.log(categories);
+    // console.log(categories);
 
     const matchedCategory = categories.find(cat => cat?._id === catId);
-    console.log(matchedCategory);
+    // console.log(matchedCategory);
 
     if (matchedCategory) 
     {
@@ -246,19 +246,41 @@ async function getCategoryName(catId)
 }, [data._id, user._id]);
 
 
-  // logic to fetch server and implement user browser history
-  // product_id : data._id , userId:
-  async function trackHistory() {
-    await fetch(`${baseURL}/api/survey/track-history`,{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify( { productId:data._id, userId:user._id  } )
-    })
-  }
+  // Modify the trackHistory function
+  const trackHistory = async () => {
+    try {
+      if (!data._id || !user._id) {
+        console.log('Missing required data for history tracking');
+        return;
+      }
 
-  useEffect(()=>{
-    trackHistory();
-  },[])
+      const response = await fetch(`${baseURL}/api/survey/track-history`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem('token')}` // Add auth token
+        },
+        body: JSON.stringify({
+          productId: data._id,
+          userId: user._id
+        })
+      });
+
+      const result = await response.json();
+      if (!result.success) {
+        console.error('Failed to track history:', result.message);
+      }
+    } catch (error) {
+      console.error('Error tracking history:', error);
+    }
+  };
+
+  // Move trackHistory call to the appropriate useEffect
+  useEffect(() => {
+    if (data._id && user._id) {
+      trackHistory();
+    }
+  }, [data._id, user._id]); // Add dependencies to ensure it runs when data or user changes
 
   return (
     <div>
