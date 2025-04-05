@@ -27,7 +27,7 @@ const app = express()
 //     origin : process.env.FRONTEND_URL
 // }))
 
-app.use(cors({ origin: [process.env.FRONTEND_URL , 'http://localhost:5173'  ] , credentials: true }))
+app.use(cors({ origin: [process.env.FRONTEND_URL , 'http://localhost:5173' , 'https://united-e.netlify.app'  ] , credentials: true }))
 
 app.use(express.json())
 app.use(cookieParser())
