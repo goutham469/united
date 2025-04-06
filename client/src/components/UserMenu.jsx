@@ -61,7 +61,7 @@ const UserMenu = ({close}) => {
 
         <Divider/>
 
-        <div className='text-sm grid gap-1'>
+        <div className='text-sm grid'>
 
             <Link onClick={handleClose} to={"/dashboard/profile"} className='px-2 hover:bg-orange-200 py-1'>
               <div style={{display:"flex"}}>
@@ -194,6 +194,18 @@ const UserMenu = ({close}) => {
                   <div style={{display:"flex"}}>
                     <CgDanger size={20}/>
                     <label style={{margin:"3px"}}>Tickets</label>
+                  </div>
+                  
+                </Link>
+              )
+            }
+
+{
+              isAdmin(user.role) && (
+                <Link onClick={handleClose} to={"/dashboard/Wishlist-Analytics"} className='px-2 hover:bg-orange-200 py-1'>
+                  <div style={{display:"flex"}}>
+                    <CgDanger size={20}/>
+                    <label style={{margin:"3px"}}>Wishlist-Analytics</label>
                   </div>
                   
                 </Link>

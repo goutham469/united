@@ -6,7 +6,8 @@ import {
     getCartItemController, 
     updateCartItemQtyController,
     getWishListProducts,
-    addToWishListProducts
+    addToWishListProducts,
+    getCombinedAnalytics
 } from "../controllers/cart.controller.js";
 
 const cartRouter = Router()
@@ -20,5 +21,8 @@ cartRouter.delete('/delete-cart-item', auth, deleteCartItemQtyController)
 // Wishlist routes
 cartRouter.post("/get-wishlist", getWishListProducts)
 cartRouter.post("/add-to-wish-list", addToWishListProducts)
+
+// Analytics routes
+cartRouter.get("/analytics/combined", getCombinedAnalytics)
 
 export default cartRouter;

@@ -226,3 +226,117 @@ export const addToWishListProducts = async (req, res) => {
         });
     }
 }
+
+export const getCombinedAnalytics = async (req, res) => {
+    try {
+        // Get all wishlist items
+        const wishlistItems = await wishListModelSchema.find()
+            .populate('productId', 'name price')
+            .lean();
+
+        // Get all cart items for conversion analysis
+        const cartItems = await CartProductModel.find().lean();
+
+        // Calculate basic metrics
+        const totalWishlistProducts = new Set(wishlistItems.map(item => item.productId?._id.toString())).size;
+        const activeUsers = new Set(wishlistItems.map(item => item.userId.toString())).size;
+        const totalWishlistItems = wishlistItems.length;
+
+        // Calculate user engagement levels
+        const userWishlistCounts = {};
+        wishlistItems.forEach(item => {
+            const userId = item.userId.toString();
+            userWishlistCounts[userId] = (userWishlistCounts[userId] || 0) + 1;
+        });
+
+        // Define engagement thresholds
+        const highEngagementThreshold = 5;
+        const mediumEngagementThreshold = 2;
+
+        const userEngagement = {
+            high: 0,
+            medium: 0,
+            low: 0
+        };
+
+        // Calculate user engagement distribution
+        Object.values(userWishlistCounts).forEach(count => {
+            if (count >= highEngagementThreshold) userEngagement.high++;
+            else if (count >= mediumEngagementThreshold) userEngagement.medium++;
+            else userEngagement.low++;
+        });
+
+        // Calculate user activity over time (last 7 days)
+        const userActivity = [];
+        const now = new Date();
+        for (let i = 6; i >= 0; i--) {
+            const date = new Date(now);
+            date.setDate(date.getDate() - i);
+            const startOfDay = new Date(date.setHours(0, 0, 0, 0));
+            const endOfDay = new Date(date.setHours(23, 59, 59, 999));
+
+            const activeUsersCount = new Set(
+                wishlistItems
+                    .filter(item => 
+                        new Date(item.updatedAt) >= startOfDay && 
+                        new Date(item.updatedAt) <= endOfDay
+                    )
+                    .map(item => item.userId.toString())
+            ).size;
+
+            userActivity.push({
+                date: startOfDay.toISOString().split('T')[0],
+                count: activeUsersCount
+            });
+        }
+
+        // Calculate conversion metrics
+        const usersWithWishlist = new Set(wishlistItems.map(item => item.userId.toString()));
+        const usersWithCart = new Set(cartItems.map(item => item.userId.toString()));
+        const usersConvertedToCart = new Set(
+            [...usersWithWishlist].filter(userId => usersWithCart.has(userId))
+        );
+        const conversionRate = (usersConvertedToCart.size / usersWithWishlist.size) * 100;
+
+        // Prepare detailed user activity data
+        const userDetails = Object.entries(userWishlistCounts).map(([userId, count]) => {
+            const lastActive = wishlistItems
+                .filter(item => item.userId.toString() === userId)
+                .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))[0]?.updatedAt;
+
+            return {
+                userId,
+                wishlistCount: count,
+                activity: count >= highEngagementThreshold ? 'high' : 
+                          count >= mediumEngagementThreshold ? 'medium' : 'low',
+                lastActive
+            };
+        });
+
+        return res.json({
+            success: true,
+            error: false,
+            data: {
+                totalWishlistProducts,
+                activeUsers,
+                totalWishlistItems,
+                conversionRate,
+                avgItemsPerUser: totalWishlistItems / activeUsers,
+                userEngagement,
+                userActivity,
+                userDetails: userDetails.sort((a, b) => b.wishlistCount - a.wishlistCount)
+            }
+        });
+
+    } catch (error) {
+        console.error('Combined analytics error:', error);
+        return res.status(500).json({
+            message: error.message || "Error fetching combined analytics",
+            error: true,
+            success: false
+        });
+    }
+};
+
+// wishListModelSchema.index({ userId: 1, updatedAt: 1 });
+// wishListModelSchema.index({ productId: 1 });

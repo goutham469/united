@@ -15,6 +15,7 @@ import cartRouter from './route/cart.route.js';
 import addressRouter from './route/address.route.js';
 import orderRouter from './route/order.route.js';
 import surveyRouter from './route/survey.route.js';
+import notificationRouter from './route/notification.route.js';
 import { product_template } from './templates/product.js';
 import sendEmail from './config/sendEmail.js';
 
@@ -53,6 +54,7 @@ app.use('/api/cart', cartRouter);
 app.use('/api/address', addressRouter);
 app.use('/api/order', orderRouter);
 app.use('/api/survey', surveyRouter);
+app.use('/api/notification', notificationRouter);
 
 app.post('/api/services/send-product' ,async  (req , res) => {
 

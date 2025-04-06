@@ -37,6 +37,7 @@ import ValidatePayment from "../pages/ValidatePayment";
 import RecycleBinProduct from "../components/RecycleBinProduct";
 import Deals from "../components/Deals";
 import WishlistPage from "../pages/WishlistPage";
+import WishlistAnalytics from "../components/WishlistAnalytics";
 
 const router = createBrowserRouter([
     {
@@ -154,6 +155,10 @@ const router = createBrowserRouter([
                     {
                         path:'wishlist',
                         element:<WishlistPage />
+                    },
+                    {
+                        path:'wishlist-analytics',
+                        element:<WishlistAnalytics />
                     }
                 ]
             },
