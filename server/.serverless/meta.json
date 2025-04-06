@@ -1,12 +1,12 @@
 {
-  "D:\\production\\ecommerce\\code3\\server\\serverless.yml": {
-    "versionFramework": "4.6.2",
-    "servicePath": "D:\\production\\ecommerce\\code3\\server\\serverless.yml",
+  "D:\\hackathon\\root\\server\\serverless.yml": {
+    "versionFramework": "4.11.1",
+    "servicePath": "D:\\hackathon\\root\\server\\serverless.yml",
     "serviceConfigFileName": "serverless.yml",
     "service": {
       "org": "goutham469",
       "app": "my-express-app2",
-      "service": "e-commerce-sanjay",
+      "service": "e-commerce-hackathon",
       "provider": {
         "name": "aws",
         "runtime": "nodejs18.x",
@@ -20,7 +20,7 @@
             "AppLogGroup": {
               "Type": "AWS::Logs::LogGroup",
               "Properties": {
-                "LogGroupName": "/aws/lambda/e-commerce-sanjay-dev-app"
+                "LogGroupName": "/aws/lambda/e-commerce-hackathon-dev-app"
               }
             },
             "IamRoleLambdaExecution": {
@@ -48,7 +48,7 @@
                       "Fn::Join": [
                         "-",
                         [
-                          "e-commerce-sanjay",
+                          "e-commerce-hackathon",
                           "dev",
                           "lambda"
                         ]
@@ -66,7 +66,7 @@
                           ],
                           "Resource": [
                             {
-                              "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/e-commerce-sanjay-dev*:*"
+                              "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/e-commerce-hackathon-dev*:*"
                             }
                           ]
                         },
@@ -77,7 +77,7 @@
                           ],
                           "Resource": [
                             {
-                              "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/e-commerce-sanjay-dev*:*:*"
+                              "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/e-commerce-hackathon-dev*:*:*"
                             }
                           ]
                         }
@@ -90,7 +90,7 @@
                   "Fn::Join": [
                     "-",
                     [
-                      "e-commerce-sanjay",
+                      "e-commerce-hackathon",
                       "dev",
                       {
                         "Ref": "AWS::Region"
@@ -106,11 +106,11 @@
               "Properties": {
                 "Code": {
                   "S3Bucket": "serverless-framework-deployments-ap-south-1-8deec114-3972",
-                  "S3Key": "serverless/e-commerce-sanjay/dev/1739477556820-2025-02-13T20:12:36.820Z/e-commerce-sanjay.zip"
+                  "S3Key": "serverless/e-commerce-hackathon/dev/1743912809620-2025-04-06T04:13:29.620Z/e-commerce-hackathon.zip"
                 },
                 "Handler": "app.handler",
                 "Runtime": "nodejs18.x",
-                "FunctionName": "e-commerce-sanjay-dev-app",
+                "FunctionName": "e-commerce-hackathon-dev-app",
                 "MemorySize": 256,
                 "Timeout": 6,
                 "Role": {
@@ -124,20 +124,20 @@
                 "AppLogGroup"
               ]
             },
-            "AppLambdaVersionxHSE34MVGOkU6gtEJrYemruU4h2rEUENDRShrKXVXU": {
+            "AppLambdaVersion0toDNgZiDFXvNIsWBIevOwBNZWdsOyStfMlEh9VXqMs": {
               "Type": "AWS::Lambda::Version",
               "DeletionPolicy": "Retain",
               "Properties": {
                 "FunctionName": {
                   "Ref": "AppLambdaFunction"
                 },
-                "CodeSha256": "qho2mSN7KctoZpFQ4Lr+xEHNlyxMLQzmQS0mdIevRVU="
+                "CodeSha256": "eT2WZQmYwEU4QoL/e1tKlug+ddD6T42sTy2xt4Oo9r0="
               }
             },
             "ApiGatewayRestApi": {
               "Type": "AWS::ApiGateway::RestApi",
               "Properties": {
-                "Name": "dev-e-commerce-sanjay",
+                "Name": "dev-e-commerce-hackathon",
                 "EndpointConfiguration": {
                   "Types": [
                     "EDGE"
@@ -256,7 +256,7 @@
                 "AppLambdaPermissionApiGateway"
               ]
             },
-            "ApiGatewayDeployment1739477548092": {
+            "ApiGatewayDeployment1743912795712": {
               "Type": "AWS::ApiGateway::Deployment",
               "Properties": {
                 "RestApiId": {
@@ -311,16 +311,16 @@
             "ServerlessDeploymentBucketName": {
               "Value": "serverless-framework-deployments-ap-south-1-8deec114-3972",
               "Export": {
-                "Name": "sls-e-commerce-sanjay-dev-ServerlessDeploymentBucketName"
+                "Name": "sls-e-commerce-hackathon-dev-ServerlessDeploymentBucketName"
               }
             },
             "AppLambdaFunctionQualifiedArn": {
               "Description": "Current Lambda function version",
               "Value": {
-                "Ref": "AppLambdaVersionxHSE34MVGOkU6gtEJrYemruU4h2rEUENDRShrKXVXU"
+                "Ref": "AppLambdaVersion0toDNgZiDFXvNIsWBIevOwBNZWdsOyStfMlEh9VXqMs"
               },
               "Export": {
-                "Name": "sls-e-commerce-sanjay-dev-AppLambdaFunctionQualifiedArn"
+                "Name": "sls-e-commerce-hackathon-dev-AppLambdaFunctionQualifiedArn"
               }
             },
             "ServiceEndpoint": {
@@ -346,7 +346,7 @@
                 ]
               },
               "Export": {
-                "Name": "sls-e-commerce-sanjay-dev-ServiceEndpoint"
+                "Name": "sls-e-commerce-hackathon-dev-ServiceEndpoint"
               }
             }
           }
@@ -365,13 +365,13 @@
               "http": "ANY /{proxy+}"
             }
           ],
-          "name": "e-commerce-sanjay-dev-app",
+          "name": "e-commerce-hackathon-dev-app",
           "package": {},
           "memory": 256,
           "timeout": 6,
           "runtime": "nodejs18.x",
           "vpc": {},
-          "versionLogicalId": "AppLambdaVersionxHSE34MVGOkU6gtEJrYemruU4h2rEUENDRShrKXVXU"
+          "versionLogicalId": "AppLambdaVersion0toDNgZiDFXvNIsWBIevOwBNZWdsOyStfMlEh9VXqMs"
         }
       }
     },
@@ -388,7 +388,7 @@
           "AppLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/e-commerce-sanjay-dev-app"
+              "LogGroupName": "/aws/lambda/e-commerce-hackathon-dev-app"
             }
           },
           "IamRoleLambdaExecution": {
@@ -416,7 +416,7 @@
                     "Fn::Join": [
                       "-",
                       [
-                        "e-commerce-sanjay",
+                        "e-commerce-hackathon",
                         "dev",
                         "lambda"
                       ]
@@ -434,7 +434,7 @@
                         ],
                         "Resource": [
                           {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/e-commerce-sanjay-dev*:*"
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/e-commerce-hackathon-dev*:*"
                           }
                         ]
                       },
@@ -445,7 +445,7 @@
                         ],
                         "Resource": [
                           {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/e-commerce-sanjay-dev*:*:*"
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/e-commerce-hackathon-dev*:*:*"
                           }
                         ]
                       }
@@ -458,7 +458,7 @@
                 "Fn::Join": [
                   "-",
                   [
-                    "e-commerce-sanjay",
+                    "e-commerce-hackathon",
                     "dev",
                     {
                       "Ref": "AWS::Region"
@@ -474,11 +474,11 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-ap-south-1-8deec114-3972",
-                "S3Key": "serverless/e-commerce-sanjay/dev/1739477556820-2025-02-13T20:12:36.820Z/e-commerce-sanjay.zip"
+                "S3Key": "serverless/e-commerce-hackathon/dev/1743912809620-2025-04-06T04:13:29.620Z/e-commerce-hackathon.zip"
               },
               "Handler": "app.handler",
               "Runtime": "nodejs18.x",
-              "FunctionName": "e-commerce-sanjay-dev-app",
+              "FunctionName": "e-commerce-hackathon-dev-app",
               "MemorySize": 256,
               "Timeout": 6,
               "Role": {
@@ -492,20 +492,20 @@
               "AppLogGroup"
             ]
           },
-          "AppLambdaVersionxHSE34MVGOkU6gtEJrYemruU4h2rEUENDRShrKXVXU": {
+          "AppLambdaVersion0toDNgZiDFXvNIsWBIevOwBNZWdsOyStfMlEh9VXqMs": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "AppLambdaFunction"
               },
-              "CodeSha256": "qho2mSN7KctoZpFQ4Lr+xEHNlyxMLQzmQS0mdIevRVU="
+              "CodeSha256": "eT2WZQmYwEU4QoL/e1tKlug+ddD6T42sTy2xt4Oo9r0="
             }
           },
           "ApiGatewayRestApi": {
             "Type": "AWS::ApiGateway::RestApi",
             "Properties": {
-              "Name": "dev-e-commerce-sanjay",
+              "Name": "dev-e-commerce-hackathon",
               "EndpointConfiguration": {
                 "Types": [
                   "EDGE"
@@ -624,7 +624,7 @@
               "AppLambdaPermissionApiGateway"
             ]
           },
-          "ApiGatewayDeployment1739477548092": {
+          "ApiGatewayDeployment1743912795712": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -679,16 +679,16 @@
           "ServerlessDeploymentBucketName": {
             "Value": "serverless-framework-deployments-ap-south-1-8deec114-3972",
             "Export": {
-              "Name": "sls-e-commerce-sanjay-dev-ServerlessDeploymentBucketName"
+              "Name": "sls-e-commerce-hackathon-dev-ServerlessDeploymentBucketName"
             }
           },
           "AppLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "AppLambdaVersionxHSE34MVGOkU6gtEJrYemruU4h2rEUENDRShrKXVXU"
+              "Ref": "AppLambdaVersion0toDNgZiDFXvNIsWBIevOwBNZWdsOyStfMlEh9VXqMs"
             },
             "Export": {
-              "Name": "sls-e-commerce-sanjay-dev-AppLambdaFunctionQualifiedArn"
+              "Name": "sls-e-commerce-hackathon-dev-AppLambdaFunctionQualifiedArn"
             }
           },
           "ServiceEndpoint": {
@@ -714,7 +714,7 @@
               ]
             },
             "Export": {
-              "Name": "sls-e-commerce-sanjay-dev-ServiceEndpoint"
+              "Name": "sls-e-commerce-hackathon-dev-ServiceEndpoint"
             }
           }
         }
@@ -733,7 +733,7 @@
       "serviceProvider": null,
       "instanceParameters": null
     },
-    "serviceRawFile": "org: goutham469\r\napp: my-express-app2\r\nservice: e-commerce-sanjay\r\n\r\nprovider:\r\n  name: aws\r\n  runtime: nodejs18.x\r\n  region: ap-south-1  # Mumbai region (ap-south-1)\r\n\r\nfunctions:\r\n  app:\r\n    handler: app.handler\r\n    memorySize: 256  # Memory size (128MB)\r\n    events:\r\n      - http: ANY /\r\n      - http: ANY /{proxy+}\r\n# plugins:\r\n#   - serverless-offline\r\n\r\n",
+    "serviceRawFile": "org: goutham469\napp: my-express-app2\nservice: e-commerce-hackathon\n\nprovider:\n  name: aws\n  runtime: nodejs18.x\n  region: ap-south-1  # Mumbai region (ap-south-1)\n\nfunctions:\n  app:\n    handler: app.handler\n    memorySize: 256  # Memory size (128MB)\n    events:\n      - http: ANY /\n      - http: ANY /{proxy+}\n# plugins:\n#   - serverless-offline\n\n",
     "command": [
       "deploy"
     ],
@@ -743,28 +743,28 @@
     "userId": "0YCWxRHGG7745yX2Wh",
     "userName": "goutham469",
     "serviceProviderAwsAccountId": "590183855894",
-    "serviceProviderAwsCfStackName": "e-commerce-sanjay-dev",
-    "serviceProviderAwsCfStackId": "arn:aws:cloudformation:ap-south-1:590183855894:stack/e-commerce-sanjay-dev/e7f4d080-acd4-11ef-a754-02a28a3c760d",
-    "serviceProviderAwsCfStackCreated": "2024-11-27T15:33:09.724Z",
-    "serviceProviderAwsCfStackUpdated": "2025-02-13T20:02:32.790Z",
-    "serviceProviderAwsCfStackStatus": "UPDATE_COMPLETE",
+    "serviceProviderAwsCfStackName": "e-commerce-hackathon-dev",
+    "serviceProviderAwsCfStackId": "arn:aws:cloudformation:ap-south-1:590183855894:stack/e-commerce-hackathon-dev/defe47d0-129c-11f0-8e06-06b19915bc53",
+    "serviceProviderAwsCfStackCreated": "2025-04-06T04:09:01.470Z",
+    "serviceProviderAwsCfStackUpdated": null,
+    "serviceProviderAwsCfStackStatus": "CREATE_COMPLETE",
     "serviceProviderAwsCfStackOutputs": [
       {
         "OutputKey": "AppLambdaFunctionQualifiedArn",
-        "OutputValue": "arn:aws:lambda:ap-south-1:590183855894:function:e-commerce-sanjay-dev-app:20",
+        "OutputValue": "arn:aws:lambda:ap-south-1:590183855894:function:e-commerce-hackathon-dev-app:1",
         "Description": "Current Lambda function version",
-        "ExportName": "sls-e-commerce-sanjay-dev-AppLambdaFunctionQualifiedArn"
+        "ExportName": "sls-e-commerce-hackathon-dev-AppLambdaFunctionQualifiedArn"
       },
       {
         "OutputKey": "ServiceEndpoint",
-        "OutputValue": "https://jww6x7fa81.execute-api.ap-south-1.amazonaws.com/dev",
+        "OutputValue": "https://bcnciyhbh7.execute-api.ap-south-1.amazonaws.com/dev",
         "Description": "URL of the service endpoint",
-        "ExportName": "sls-e-commerce-sanjay-dev-ServiceEndpoint"
+        "ExportName": "sls-e-commerce-hackathon-dev-ServiceEndpoint"
       },
       {
         "OutputKey": "ServerlessDeploymentBucketName",
         "OutputValue": "serverless-framework-deployments-ap-south-1-8deec114-3972",
-        "ExportName": "sls-e-commerce-sanjay-dev-ServerlessDeploymentBucketName"
+        "ExportName": "sls-e-commerce-hackathon-dev-ServerlessDeploymentBucketName"
       }
     ],
     "compiledCloudFormationTemplate": {
@@ -774,7 +774,7 @@
         "AppLogGroup": {
           "Type": "AWS::Logs::LogGroup",
           "Properties": {
-            "LogGroupName": "/aws/lambda/e-commerce-sanjay-dev-app"
+            "LogGroupName": "/aws/lambda/e-commerce-hackathon-dev-app"
           }
         },
         "IamRoleLambdaExecution": {
@@ -802,7 +802,7 @@
                   "Fn::Join": [
                     "-",
                     [
-                      "e-commerce-sanjay",
+                      "e-commerce-hackathon",
                       "dev",
                       "lambda"
                     ]
@@ -820,7 +820,7 @@
                       ],
                       "Resource": [
                         {
-                          "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/e-commerce-sanjay-dev*:*"
+                          "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/e-commerce-hackathon-dev*:*"
                         }
                       ]
                     },
@@ -831,7 +831,7 @@
                       ],
                       "Resource": [
                         {
-                          "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/e-commerce-sanjay-dev*:*:*"
+                          "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/e-commerce-hackathon-dev*:*:*"
                         }
                       ]
                     }
@@ -844,7 +844,7 @@
               "Fn::Join": [
                 "-",
                 [
-                  "e-commerce-sanjay",
+                  "e-commerce-hackathon",
                   "dev",
                   {
                     "Ref": "AWS::Region"
@@ -860,11 +860,11 @@
           "Properties": {
             "Code": {
               "S3Bucket": "serverless-framework-deployments-ap-south-1-8deec114-3972",
-              "S3Key": "serverless/e-commerce-sanjay/dev/1739477556820-2025-02-13T20:12:36.820Z/e-commerce-sanjay.zip"
+              "S3Key": "serverless/e-commerce-hackathon/dev/1743912809620-2025-04-06T04:13:29.620Z/e-commerce-hackathon.zip"
             },
             "Handler": "app.handler",
             "Runtime": "nodejs18.x",
-            "FunctionName": "e-commerce-sanjay-dev-app",
+            "FunctionName": "e-commerce-hackathon-dev-app",
             "MemorySize": 256,
             "Timeout": 6,
             "Role": {
@@ -878,20 +878,20 @@
             "AppLogGroup"
           ]
         },
-        "AppLambdaVersionxHSE34MVGOkU6gtEJrYemruU4h2rEUENDRShrKXVXU": {
+        "AppLambdaVersion0toDNgZiDFXvNIsWBIevOwBNZWdsOyStfMlEh9VXqMs": {
           "Type": "AWS::Lambda::Version",
           "DeletionPolicy": "Retain",
           "Properties": {
             "FunctionName": {
               "Ref": "AppLambdaFunction"
             },
-            "CodeSha256": "qho2mSN7KctoZpFQ4Lr+xEHNlyxMLQzmQS0mdIevRVU="
+            "CodeSha256": "eT2WZQmYwEU4QoL/e1tKlug+ddD6T42sTy2xt4Oo9r0="
           }
         },
         "ApiGatewayRestApi": {
           "Type": "AWS::ApiGateway::RestApi",
           "Properties": {
-            "Name": "dev-e-commerce-sanjay",
+            "Name": "dev-e-commerce-hackathon",
             "EndpointConfiguration": {
               "Types": [
                 "EDGE"
@@ -1010,7 +1010,7 @@
             "AppLambdaPermissionApiGateway"
           ]
         },
-        "ApiGatewayDeployment1739477548092": {
+        "ApiGatewayDeployment1743912795712": {
           "Type": "AWS::ApiGateway::Deployment",
           "Properties": {
             "RestApiId": {
@@ -1065,16 +1065,16 @@
         "ServerlessDeploymentBucketName": {
           "Value": "serverless-framework-deployments-ap-south-1-8deec114-3972",
           "Export": {
-            "Name": "sls-e-commerce-sanjay-dev-ServerlessDeploymentBucketName"
+            "Name": "sls-e-commerce-hackathon-dev-ServerlessDeploymentBucketName"
           }
         },
         "AppLambdaFunctionQualifiedArn": {
           "Description": "Current Lambda function version",
           "Value": {
-            "Ref": "AppLambdaVersionxHSE34MVGOkU6gtEJrYemruU4h2rEUENDRShrKXVXU"
+            "Ref": "AppLambdaVersion0toDNgZiDFXvNIsWBIevOwBNZWdsOyStfMlEh9VXqMs"
           },
           "Export": {
-            "Name": "sls-e-commerce-sanjay-dev-AppLambdaFunctionQualifiedArn"
+            "Name": "sls-e-commerce-hackathon-dev-AppLambdaFunctionQualifiedArn"
           }
         },
         "ServiceEndpoint": {
@@ -1100,7 +1100,7 @@
             ]
           },
           "Export": {
-            "Name": "sls-e-commerce-sanjay-dev-ServiceEndpoint"
+            "Name": "sls-e-commerce-hackathon-dev-ServiceEndpoint"
           }
         }
       }

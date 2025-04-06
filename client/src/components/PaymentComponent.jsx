@@ -28,7 +28,7 @@ function Checkout( { payment_id } ) {
        }catch(err)
        {
         alert("payment failed");
-        console.log(err.message)
+        console.log(err.message)``
        }
     };
 

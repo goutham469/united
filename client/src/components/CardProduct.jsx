@@ -19,7 +19,7 @@ const CardProduct = ({ data }) => {
 
   useEffect(() => {
     if (user?._id) {
-      fetchWishlistStatus();
+      // fetchWishlistStatus();
     }
   }, [user._id, data._id]);
 

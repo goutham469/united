@@ -1,6 +1,6 @@
 org: goutham469
 app: my-express-app2
-service: e-commerce-sanjay
+service: e-commerce-hackathon
 
 provider:
   name: aws

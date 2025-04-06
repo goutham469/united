@@ -10,7 +10,7 @@ function CreateCashFreeOrder( { list_items, addressId, subTotalAmt, totalAmt,use
  
 
     async function createOrder(amount_total = totalAmt , phone_no='' , customer_id1 ='customer_id')
-    {
+    { 
         console.log("cashfree initiation started.")
 
         try{
